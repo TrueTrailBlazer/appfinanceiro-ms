@@ -92,3 +92,36 @@ Este projeto foi estruturado para cumprir rigorosamente os seguintes requisitos:
 ```
 
 ***
+
+
+🏁 Checkpoint: Status Atual (Maio de 2026)
+🛠️ O que foi implementado:
+Isolamento do Frontend: O app React foi movido com sucesso para a pasta /frontend.  
+
+Porta de Entrada (Gateway): Criado um API Gateway funcional na porta 3000 que distribui o tráfego para os serviços internos.  
+
+Frameworks de Backend:
+
+Fastify (Node.js) rodando na porta 3001 (Core Financeiro).  
+
+FastAPI (Python) rodando na porta 3002 (Automação/Processamento).  
+
+Segurança (JWT): O Gateway agora valida criptograficamente os tokens enviados pelo React usando o SUPABASE_JWT_SECRET. Apenas usuários logados via Supabase conseguem "atravessar" o Gateway para as rotas protegidas.  
+
+Consumo Interno: O Frontend já consegue buscar dados através do Gateway enviando o token no cabeçalho Authorization: Bearer <token>.  
+
+🔴 Onde paramos (O Desafio Atual):
+Iniciamos a migração da lógica de acesso ao banco de dados do Frontend para o Backend (Fastify). Atualmente, a rota /api/transactions no Gateway está retornando um Erro 500.
+
+Diagnóstico: O Fastify está recebendo a requisição, mas falha ao tentar executar o SELECT na tabela do Supabase.
+
+Possíveis causas: Nome da tabela divergente, variáveis de ambiente .env no backend ou políticas de RLS no Supabase.
+
+📋 Próximas Tarefas:
+Debug do Finance-Core: Corrigir a conexão do Fastify com o banco de dados.
+
+Migração Completa do Contexto: Alterar o TransactionContext.jsx do React para que todas as funções (Add, Update, Delete) apontem para o Gateway em vez de usar o supabase-js diretamente no front.
+
+Módulo de Automação (Python): Implementar a lógica de leitura de CSV usando Pandas no microsserviço Python.
+
+Testes Automatizados: Implementar os testes unitários (Vitest e PyTest) conforme solicitado nos requisitos acadêmicos.
